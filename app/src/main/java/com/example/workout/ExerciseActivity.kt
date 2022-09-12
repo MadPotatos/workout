@@ -1,5 +1,7 @@
 package com.example.workout
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -20,7 +22,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
     private lateinit var tts: TextToSpeech
-
+    private var player: MediaPlayer? = null
     private lateinit var exerciseList: ArrayList<ExerciseModel>
     private var currentExercisePosition = -1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,17 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setupRestView()
     }
     private fun setupRestView(){
+
+        try{
+            val soundURI = Uri.parse("android.resource://com.example.workout/" +R.raw.press_start)
+            player = MediaPlayer.create(applicationContext,soundURI)
+            player?.isLooping = false
+            player?.start()
+        }catch(e: Exception){
+            e.printStackTrace()
+        }
+
+
         binding.flRestView.visibility = View.VISIBLE
         binding.tvTitle.visibility = View.VISIBLE
         binding.tvExerciseName.visibility = View.INVISIBLE
@@ -123,6 +136,9 @@ private fun setRestProgressBar(){
         }
         tts.stop()
         tts.shutdown()
+        if(player != null){
+            player!!.stop()
+        }
     }
 
     override fun onInit(status: Int) {
