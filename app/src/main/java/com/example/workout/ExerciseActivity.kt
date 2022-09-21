@@ -109,7 +109,7 @@ private fun setRestProgressBar(){
         override fun onFinish() {
             currentExercisePosition++
             exerciseList[currentExercisePosition].setIsSelected(true)
-
+            exerciseAdapter!!.notifyDataSetChanged()
             setupExerciseView()
         }
 
@@ -126,6 +126,12 @@ private fun setRestProgressBar(){
             }
 
             override fun onFinish() {
+
+                exerciseList[currentExercisePosition].setIsSelected(false)
+                exerciseList[currentExercisePosition].setIsCompleted(true)
+                exerciseAdapter!!.notifyDataSetChanged()
+
+
                 if(currentExercisePosition < exerciseList.size -1 ){
                     setupRestView()
                 }else{
