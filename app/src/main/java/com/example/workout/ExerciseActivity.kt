@@ -9,6 +9,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workout.databinding.ActivityExerciseBinding
 import java.util.*
 import kotlin.collections.ArrayList
@@ -20,6 +21,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var restProgress = 0
 
     private var exerciseTimer: CountDownTimer? = null
+    private var exerciseAdapter : ExerciseStatusAdapter? = null
     private var exerciseProgress = 0
     private lateinit var tts: TextToSpeech
     private var player: MediaPlayer? = null
@@ -41,7 +43,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             onBackPressed()
         }
         setupRestView()
+        setupExerciseStatusRecycleView()
     }
+
+    private fun setupExerciseStatusRecycleView() {
+        binding.rvExerciseStatus.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList)
+        binding.rvExerciseStatus.adapter = exerciseAdapter
+    }
+
     private fun setupRestView(){
 
         try{
@@ -98,6 +108,8 @@ private fun setRestProgressBar(){
 
         override fun onFinish() {
             currentExercisePosition++
+            exerciseList[currentExercisePosition].setIsSelected(true)
+
             setupExerciseView()
         }
 
