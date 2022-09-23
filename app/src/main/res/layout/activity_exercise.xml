@@ -12,7 +12,7 @@
         android:layout_height="?android:attr/actionBarSize"
         android:theme="@style/ToolbarTheme"
         android:background="@color/white"
-        app:titleTextColor="@color/grey"
+        app:titleTextColor="@color/dark_grey"
         />
 
     <TextView
