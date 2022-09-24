@@ -38,15 +38,8 @@ class BMIActivity : AppCompatActivity() {
                 makeVisibleUSUnitsView()
             }
         }
-        binding.btnCalculate.setOnClickListener{
-            if(validateMetricUnits()){
-                val heightValue : Float = binding.etHeight.text.toString().toFloat()/100
-                val weightValue : Float = binding.etWeight.text.toString().toFloat()
-                val bmi = weightValue / (heightValue*heightValue)
-                displayBMIResult(bmi)
-            }else{
-                Toast.makeText(this,"Please enter valid values.",Toast.LENGTH_SHORT).show()
-            }
+        binding.btnCalculate.setOnClickListener {
+            calculateUnits()
         }
     }
     private fun makeVisibleMetricUnitsView(){
@@ -124,4 +117,40 @@ class BMIActivity : AppCompatActivity() {
         }
         return isValid
     }
+    private fun validateUsUnits():Boolean{
+        var isValid = true
+        if(binding.etUSHeightFeet.text.toString().isEmpty()){
+            isValid = false
+        }else if (binding.etUSHeightInch.text.toString().isEmpty()){
+            isValid = false
+        }else if (binding.etUSWeight.text.toString().isEmpty()) {
+            isValid = false
+        }
+        return isValid
+    }
+    private fun calculateUnits(){
+        if(currentVisibleView == METRIC_UNITS_VIEW){
+            if(validateMetricUnits()){
+                val heightValue : Float = binding.etHeight.text.toString().toFloat()/100
+                val weightValue : Float = binding.etWeight.text.toString().toFloat()
+                val bmi = weightValue / (heightValue*heightValue)
+                displayBMIResult(bmi)
+            }else{
+                Toast.makeText(this,"Please enter valid values.",Toast.LENGTH_SHORT).show()
+            }
+
+        }else{
+            if(validateUsUnits()){
+                val usHeightValueFeet: String = binding.etUSHeightFeet.text.toString()
+                val usHeightValueInch: String = binding.etUSHeightInch.text.toString()
+                val usWeightValue : Float = binding.etUSWeight.text.toString().toFloat()
+                val usHeightValue = usHeightValueInch.toFloat() +  usHeightValueFeet.toFloat() * 12
+                val bmi = 703 *(usWeightValue/(usHeightValue*usHeightValue))
+                displayBMIResult(bmi)
+            } else{
+            Toast.makeText(this,"Please enter valid values.",Toast.LENGTH_SHORT).show()
+        }
+        }
+    }
+
 }
