@@ -11,7 +11,12 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 class BMIActivity : AppCompatActivity() {
+    companion object{
+        private const val METRIC_UNITS_VIEW = "METRIC_UNIT_VIEW"
+        private const val US_UNITS_VIEW = "US_UNIT_VIEW"
+    }
     private lateinit var binding: ActivityBmiBinding
+    private var currentVisibleView: String = "METRIC_UNIT_VIEW"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBmiBinding.inflate(layoutInflater)
@@ -25,6 +30,14 @@ class BMIActivity : AppCompatActivity() {
         binding.toolbarBmiActivity.setNavigationOnClickListener{
            onBackPressed()
         }
+        makeVisibleMetricUnitsView()
+        binding.rgUnit.setOnCheckedChangeListener{_,checkedId: Int ->
+            if(checkedId == R.id.rbtnMetricUnit){
+                makeVisibleMetricUnitsView()
+            }else{
+                makeVisibleUSUnitsView()
+            }
+        }
         binding.btnCalculate.setOnClickListener{
             if(validateMetricUnits()){
                 val heightValue : Float = binding.etHeight.text.toString().toFloat()/100
@@ -35,6 +48,31 @@ class BMIActivity : AppCompatActivity() {
                 Toast.makeText(this,"Please enter valid values.",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun makeVisibleMetricUnitsView(){
+        currentVisibleView = METRIC_UNITS_VIEW
+        binding.tilHeight.visibility = View.VISIBLE
+        binding.tilWeight.visibility = View.VISIBLE
+        binding.tilUSWeight.visibility = View.GONE
+        binding.tilUSHeightFeet.visibility = View.GONE
+        binding.tilUSHeightInch.visibility = View.GONE
+
+        binding.etHeight.text!!.clear()
+        binding.etWeight.text!!.clear()
+        binding.llDisplayResult.visibility = View.INVISIBLE
+    }
+    private fun makeVisibleUSUnitsView(){
+        currentVisibleView = US_UNITS_VIEW
+        binding.tilHeight.visibility = View.INVISIBLE
+        binding.tilWeight.visibility = View.INVISIBLE
+        binding.tilUSWeight.visibility = View.VISIBLE
+        binding.tilUSHeightFeet.visibility = View.VISIBLE
+        binding.tilUSHeightInch.visibility = View.VISIBLE
+
+        binding.etUSHeightFeet.text!!.clear()
+        binding.etUSHeightInch.text!!.clear()
+        binding.etUSWeight.text!!.clear()
+        binding.llDisplayResult.visibility = View.INVISIBLE
     }
     private fun displayBMIResult(bmi: Float){
         val bmiLabel : String
