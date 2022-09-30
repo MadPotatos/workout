@@ -12,4 +12,21 @@
         android:background="@color/white"
         android:theme="@style/ToolbarTheme"
         app:titleTextColor="@color/dark_grey" />
+    <TextView
+        android:id="@+id/tvHistoryTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_history_activity"
+        android:text="EXERCISE COMPLETED"
+        android:gravity="center"
+        android:textSize="18sp"
+
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHistoryTitle"
+        android:layout_marginTop="5dp"
+        />
 </RelativeLayout>

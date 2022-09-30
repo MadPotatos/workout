@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.workout.databinding.ActivityHistoryBinding
 import com.example.workout.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -31,8 +32,16 @@ class HistoryActivity : AppCompatActivity() {
         lifecycleScope.launch {
             historyDao?.fetchAllDates()?.collect(){
                 allDatesList ->
-                for(i in allDatesList){
-                    Log.e("Date: ","" +i.date)
+                if(allDatesList.isNotEmpty()){
+                    binding.rvHistory.layoutManager = LinearLayoutManager(this@HistoryActivity)
+
+                    val dates = ArrayList<String>()
+                    for(date in allDatesList){
+                        dates.add(date.date)
+                    }
+                    val historyAdapter = HistoryAdapter(dates)
+
+                    binding.rvHistory.adapter = historyAdapter
                 }
             }
         }
