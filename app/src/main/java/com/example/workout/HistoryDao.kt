@@ -9,4 +9,7 @@ import kotlinx.coroutines.flow.Flow
         @Insert
         suspend fun insert(historyEntity: HistoryEntity)
 
+        @Query("SELECT * FROM `history-table`")
+        fun fetchAllDates():Flow<List<HistoryEntity>>
+
 }
