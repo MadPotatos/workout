@@ -79,7 +79,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             restTimer?.cancel()
             restProgress = 0
         }
-        binding.tvUpcomingExerciseName.text = exerciseList[currentExercisePosition+1].getName()
+        binding.tvUpcomingExerciseName.text = exerciseList[currentExercisePosition+1].name
         setRestProgressBar()
     }
 
@@ -96,9 +96,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             exerciseProgress = 0
         }
 
-        speakOut(exerciseList[currentExercisePosition].getName())
-        binding.ivImage.setImageResource(exerciseList[currentExercisePosition].getImage())
-        binding.tvExerciseName.text = exerciseList[currentExercisePosition].getName()
+        speakOut(exerciseList[currentExercisePosition].name)
+        binding.ivImage.setImageResource(exerciseList[currentExercisePosition].image)
+        binding.tvExerciseName.text = exerciseList[currentExercisePosition].name
         setExerciseProgressBar()
     }
 private fun setRestProgressBar(){
@@ -113,7 +113,7 @@ private fun setRestProgressBar(){
 
         override fun onFinish() {
             currentExercisePosition++
-            exerciseList[currentExercisePosition].setIsSelected(true)
+            exerciseList[currentExercisePosition].isSelected = true
             exerciseAdapter!!.notifyDataSetChanged()
             setupExerciseView()
         }
@@ -135,8 +135,8 @@ private fun setRestProgressBar(){
 
 
                 if(currentExercisePosition < exerciseList.size -1 ){
-                    exerciseList[currentExercisePosition].setIsSelected(false)
-                    exerciseList[currentExercisePosition].setIsCompleted(true)
+                    exerciseList[currentExercisePosition].isSelected = false
+                    exerciseList[currentExercisePosition].isCompleted = true
                     exerciseAdapter!!.notifyDataSetChanged()
                     setupRestView()
                 }else{

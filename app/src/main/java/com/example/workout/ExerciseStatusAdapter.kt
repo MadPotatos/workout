@@ -21,14 +21,14 @@ RecyclerView.Adapter<ExerciseStatusAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model: ExerciseModel = items[position]
-        holder.tvItem.text = model.getId().toString()
+        holder.tvItem.text = model.id.toString()
 
         when{
-            model.getIsSelected() ->{
+            model.isSelected ->{
                 holder.tvItem.background = ContextCompat.getDrawable(holder.itemView.context,R.drawable.item_circular_thin_color_accent_border)
                 holder.tvItem.setTextColor(Color.parseColor("#212121"))
             }
-            model.getIsCompleted() ->{
+            model.isCompleted ->{
                 holder.tvItem.background = ContextCompat.getDrawable(holder.itemView.context,R.drawable.circular_accent_background)
                 holder.tvItem.setTextColor(Color.parseColor("#FFFFFF"))
             }
