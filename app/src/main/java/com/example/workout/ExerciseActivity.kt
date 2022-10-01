@@ -46,6 +46,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding.toolbarExercise.setNavigationOnClickListener{
             customDialogForBackButton()
         }
+
         setupRestView()
         setupExerciseStatusRecycleView()
     }
@@ -104,7 +105,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 private fun setRestProgressBar(){
     binding.restBar.progress = restProgress
 
-    restTimer = object: CountDownTimer(restTimerDuration*1000,1000){
+    restTimer = object: CountDownTimer(restTimerDuration*10000,1000){
         override fun onTick(p0: Long) {
            restProgress++
             binding.restBar.progress = 10 - restProgress
@@ -123,7 +124,7 @@ private fun setRestProgressBar(){
 
     private fun setExerciseProgressBar(){
         binding.progressBarExercise.progress = exerciseProgress
-        exerciseTimer = object: CountDownTimer(exerciseTimerDuration*1000,1000){
+        exerciseTimer = object: CountDownTimer(exerciseTimerDuration*30000,1000){
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding.progressBarExercise.progress = 30 - exerciseProgress
